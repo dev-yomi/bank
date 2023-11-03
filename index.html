@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyAutoFarm Interface</title>
+</head>
+<body>
+    <img src="pepe.png" alt="Pepe Image" style="display: block; margin: auto; width: 20%; height: auto;"> <!-- Updated style here -->
+    <div class="container">
+    <span id="connectionStatus"></span>
+    <button id="connectButton" onclick="connectWallet()">Connect Wallet</button>
+    <br>
+    <input type="text" id="depositAmount" placeholder="Amount to Deposit in BNB">
+    <button onclick="deposit()">Deposit</button>
+    <br>
+    FBANK Balance: <span id="fbankBalance">0</span>
+    <br>
+    <br>
+    Effective Balance: <span id="effectiveBalance">0</span>
+    <br>
+    <input type="text" id="withdrawAmount" placeholder="Amount to Withdraw in Tokens">
+    <button onclick="withdraw()">Withdraw</button>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.3.5/dist/web3.min.js"></script>
+    <script src="app.js"></script>
+    </div>
+</body>
+</html>

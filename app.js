@@ -539,7 +539,8 @@ async function connectWallet() {
             updateBalance();
             
             // Hide the button
-            document.getElementById("connectButton").style.display = "none";  
+            document.getElementById("connectButton").style.display = "none";
+            updateTotalVaultBalance();
             
             // Update the connection status text
             const connectionStatus = document.getElementById("connectionStatus");
@@ -611,11 +612,16 @@ function fetchBNBPrice() {
         });
 }
 
-// ... (rest of the code remains the same)
+async function updateTotalVaultBalance() {
+    const totalVaultBalance = await contract.methods.totalDeposits().call();
+    document.getElementById("totalVaultBalance").innerText = displayInEther ? 
+        web3.utils.fromWei(totalVaultBalance, 'ether') : totalVaultBalance;
+}
+
 
 // Call the function to fetch and update the BNB price
 fetchBNBPrice();
 
-// Optionally, refresh the price every minute (or another interval)
 setInterval(fetchBNBPrice, 60 * 1000);
+setInterval(updateTotalVaultBalance, 10 * 1000);
 

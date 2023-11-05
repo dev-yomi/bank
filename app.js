@@ -1,7 +1,7 @@
 let web3;
 let contract;
 let userAddress;
-const contractAddress = '0x74E2fA3CD0bA3f651C623D43Dfb3DCf63dfd43a8';
+const contractAddress = '0xCA77173e0f1454129D74A2D78CaEEEBF9fdF9710';
 const contractABI = [
 	{
 		"inputs": [
@@ -582,4 +582,40 @@ function toggleDisplay() {
     displayInEther = !displayInEther;
     updateBalance();
 }
+
+let previousBNBPrice = null;
+
+function fetchBNBPrice() {
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
+        .then(response => response.json())
+        .then(data => {
+            const bnbPriceElement = document.getElementById('bnbPrice');
+            const currentBNBPrice = data.binancecoin.usd;
+            
+            // If we have a previous price, compare and update the color
+            if (previousBNBPrice !== null) {
+                if (currentBNBPrice > previousBNBPrice) {
+                    bnbPriceElement.style.color = "green";
+                } else if (currentBNBPrice < previousBNBPrice) {
+                    bnbPriceElement.style.color = "red";
+                } else {
+                    bnbPriceElement.style.color = "white"; // No change, set to a neutral color
+                }
+            }
+
+            bnbPriceElement.innerText = `$${currentBNBPrice.toFixed(2)}`;
+            previousBNBPrice = currentBNBPrice; // Update the previous price for the next comparison
+        })
+        .catch(error => {
+            console.error('Error fetching BNB price:', error);
+        });
+}
+
+// ... (rest of the code remains the same)
+
+// Call the function to fetch and update the BNB price
+fetchBNBPrice();
+
+// Optionally, refresh the price every minute (or another interval)
+setInterval(fetchBNBPrice, 60 * 1000);
 
